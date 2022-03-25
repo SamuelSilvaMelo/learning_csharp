@@ -12,4 +12,13 @@
         FACILITADOR,
         ALUNO
     }
+
+    public enum Speciality
+    {
+        CSharp,
+        DotNet,
+        Python,
+        Docker,
+        NodeJs
+    }
 }
