@@ -26,7 +26,8 @@ namespace Course_API.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Course_API.API", Version = "v1" });
-            });            
+            });
+            services.AddScoped<IStudentServices, StudentServices>();     
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
