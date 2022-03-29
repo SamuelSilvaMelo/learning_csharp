@@ -6,7 +6,7 @@ using Course_API.Models;
 
 namespace Course_API.Repository
 {
-    public class StudentRepository : IBasicCRUD<StudentModel>
+    public class StudentRepository : IStandartRepositoryOperations<StudentModel>
     {
         private static readonly List<StudentModel> _student;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Course_API.Interfaces
 {
-    public interface IBasicCRUD<T>
+    public interface IStandartRepositoryOperations<T>
     {
         List<T> GetAll();
         T GetByID(Guid userID);

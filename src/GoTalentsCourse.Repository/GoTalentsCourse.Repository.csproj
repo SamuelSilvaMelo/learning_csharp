@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Course_API.Models\Course_API.Models.csproj" />
+    <ProjectReference Include="..\GoTalentsCourse.Domain\GoTalentsCourse.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -6,7 +6,7 @@ using Course_API.Models;
 
 namespace Course_API.Repository
 {
-    public class FacilitatorRepository : IBasicCRUD<FacilitatorModel>
+    public class FacilitatorRepository : IStandartRepositoryOperations<FacilitatorModel>
     {
         static readonly List<FacilitatorModel> _facilitators;
 
