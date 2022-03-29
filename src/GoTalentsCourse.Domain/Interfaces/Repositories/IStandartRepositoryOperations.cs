@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Course_API.Interfaces
+namespace GoTalentsCourse.Interfaces
 {
     public interface IStandartRepositoryOperations<T>
     {

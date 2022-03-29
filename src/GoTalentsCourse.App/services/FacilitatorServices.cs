@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Course_API.Repository;
-using Course_API.Models;
+using GoTalentsCourse.Repository;
+using GoTalentsCourse.Models;
 
-namespace Course_API.Services
+namespace GoTalentsCourse.Services
 {
     public class FacilitatorServices : IFacilitatorServices
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using Course_API.Services;
-using Course_API.Models;
+using GoTalentsCourse.Services;
+using GoTalentsCourse.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Course_API.API.Controllers
+namespace GoTalentsCourse.API.Controllers
 {
     [ApiController]
     public class FacilitatorController : ControllerBase

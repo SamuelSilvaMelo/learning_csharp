@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Course_API.Models;
-using Course_API.Types;
+using GoTalentsCourse.Models;
+using GoTalentsCourse.Types;
 
-namespace Course_API.Services
+namespace GoTalentsCourse.Services
 {
     public interface IFacilitatorServices
     {

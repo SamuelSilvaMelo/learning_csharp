@@ -4,10 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Course_API.Services;
+using GoTalentsCourse.Services;
 using System.Text.Json;
 
-namespace Course_API.API
+namespace GoTalentsCourse.API
 {
     public class Startup
     {
@@ -25,7 +25,7 @@ namespace Course_API.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Course_API.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GoTalentsCourse.API", Version = "v1" });
             });
             services.AddScoped<IStudentServices, StudentServices>();
             services.AddScoped<IFacilitatorServices, FacilitatorServices>();
@@ -38,7 +38,7 @@ namespace Course_API.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Course_API.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GoTalentsCourse.API v1"));
             }
 
             app.UseHttpsRedirection();

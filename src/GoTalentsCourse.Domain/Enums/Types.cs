@@ -1,4 +1,4 @@
-﻿namespace Course_API.Types
+﻿namespace GoTalentsCourse.Types
 {
     public enum GenderType
     {

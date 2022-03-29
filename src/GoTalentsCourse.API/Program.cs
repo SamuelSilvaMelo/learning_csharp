@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Course_API.API
+namespace GoTalentsCourse.API
 {
     public class Program
     {

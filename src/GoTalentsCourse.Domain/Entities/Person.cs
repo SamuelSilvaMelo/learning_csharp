@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using Course_API.Types;
+using GoTalentsCourse.Types;
 
-namespace Course_API.AbstractClasses
+namespace GoTalentsCourse.AbstractClasses
 
 {
     public abstract class Person

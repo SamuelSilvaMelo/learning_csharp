@@ -1,8 +1,8 @@
 ﻿using System;
-using Course_API.AbstractClasses;
-using Course_API.Types;
+using GoTalentsCourse.AbstractClasses;
+using GoTalentsCourse.Types;
 
-namespace Course_API.Models
+namespace GoTalentsCourse.Models
 {
     public class FacilitatorModel : Person
     {
