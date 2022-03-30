@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using GoTalentsCourse.Repository;
 using GoTalentsCourse.Models;
+using GoTalentsCourse.Types;
 
 namespace GoTalentsCourse.Services
 {
@@ -38,6 +39,11 @@ namespace GoTalentsCourse.Services
 
         public Guid Save(FacilitatorModel newFacilitator)
         {
+            if (newFacilitator.Role != RoleType.FACILITADOR)
+            {
+                throw new Exception("Invalid role for facilitator");
+            }
+
             List<FacilitatorModel> allFacilitators = GetAll();
             FacilitatorModel registeredFacilitator = allFacilitators.Find(facilitator => facilitator.Email == newFacilitator.Email);
             

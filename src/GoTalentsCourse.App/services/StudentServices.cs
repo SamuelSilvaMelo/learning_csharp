@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using GoTalentsCourse.Repository;
 using GoTalentsCourse.Models;
+using GoTalentsCourse.Types;
 
 namespace GoTalentsCourse.Services
 {
@@ -38,6 +39,11 @@ namespace GoTalentsCourse.Services
 
         public Guid Save(StudentModel newStudent)
         {
+            if (newStudent.Role != RoleType.ALUNO)
+            {
+                throw new Exception("Invalid role for student");
+            }
+
             List<StudentModel> allStudents = GetAll();
             StudentModel registeredStudent = allStudents.Find(student => student.Email == newStudent.Email);
 
