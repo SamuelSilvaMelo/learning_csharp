@@ -2,7 +2,6 @@
 using GoTalentsCourse.Services;
 using GoTalentsCourse.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace GoTalentsCourse.API.Controllers
 {
@@ -33,9 +32,9 @@ namespace GoTalentsCourse.API.Controllers
                 var student = _service.GetByID(id);
                 return Ok(student);
             }
-            catch (System.Exception)
+            catch (System.Exception error)
             {
-                return NotFound();
+                return NotFound(new { error.Message });
             }
         }
 
@@ -48,9 +47,9 @@ namespace GoTalentsCourse.API.Controllers
                 var newStudentID = _service.Save(student);
                 return Ok(newStudentID);
             }
-            catch (System.Exception)
+            catch (System.Exception error)
             {
-                return Conflict();
+                return Conflict(new { error.Message });
             }
         }
 
@@ -63,9 +62,9 @@ namespace GoTalentsCourse.API.Controllers
                 _service.Delete(id);
                 return NoContent();
             }
-            catch (System.Exception)
+            catch (System.Exception error)
             {
-                return NotFound();
+                return NotFound(new { error.Message });
             }
         }
     }

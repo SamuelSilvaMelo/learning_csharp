@@ -32,9 +32,9 @@ namespace GoTalentsCourse.API.Controllers
                 var facilitator = _service.GetByID(id);
                 return Ok(facilitator);
             }
-            catch (System.Exception)
+            catch (System.Exception error)
             {
-                return NotFound();
+                return NotFound(new { error.Message });
             }
         }
 
@@ -47,9 +47,9 @@ namespace GoTalentsCourse.API.Controllers
                 var newFacilitatorID = _service.Save(facilitator);
                 return Ok(newFacilitatorID);
             }
-            catch (System.Exception)
+            catch (System.Exception error)
             {
-                return Conflict();
+                return Conflict(new { error.Message });
             }
         }
 
@@ -62,9 +62,9 @@ namespace GoTalentsCourse.API.Controllers
                 _service.Delete(id);
                 return NoContent();
             }
-            catch (System.Exception)
+            catch (System.Exception error)
             {
-                return NotFound();
+                return NotFound(new { error.Message });
             }
         }
     }
