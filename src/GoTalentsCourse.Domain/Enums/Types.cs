@@ -1,5 +1,8 @@
-﻿namespace GoTalentsCourse.Types
+﻿using System.Text.Json.Serialization;
+
+namespace GoTalentsCourse.Types
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum GenderType
     {
         MASCULINO,
@@ -7,12 +10,14 @@
         OUTROS
     }
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum RoleType
     {
         FACILITADOR,
         ALUNO
     }
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Speciality
     {
         CSharp,

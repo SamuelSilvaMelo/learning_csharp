@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using GoTalentsCourse.AbstractClasses;
 using GoTalentsCourse.Types;
 
@@ -9,9 +10,14 @@ namespace GoTalentsCourse.Models
         public Guid StudentId { get; private set; }
         // Adicionar Challenges
 
+        public StudentModel() : base()
+        {
+            StudentId = Guid.NewGuid();
+        }
+
         public StudentModel(
             string userName,
-            // string birthDate,
+            string birthDate,
             GenderType gender,
             string email,
             string cpf,
@@ -20,7 +26,7 @@ namespace GoTalentsCourse.Models
             RoleType role
         ) : base(
             userName,
-            // birthDate,
+            birthDate,
             gender,
             email,
             cpf,

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using GoTalentsCourse.Types;
 
 namespace GoTalentsCourse.AbstractClasses
@@ -10,33 +9,35 @@ namespace GoTalentsCourse.AbstractClasses
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "User name is required")]
         [StringLength(maximumLength: 100, MinimumLength = 10, ErrorMessage = "The name must have a minimum length of 10 and a maximum length of 100")]
-        public string UserName { get; protected set; }
+        public string UserName { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Birth Data is required")]
-        public DateTime BirthDate { get; protected set; }
+        public DateTime BirthDate { get; set; }
 
-        [Required(ErrorMessage = "The sex field is required")]
-        public GenderType Gender { get; protected set; }
+        [EnumDataType(typeof(GenderType))]
+        public GenderType Gender { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        public string Email { get; protected set; }
+        public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "CPF is required")]
-        public string CPF { get; protected set; }
+        public string CPF { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Nick Name is Required")]
-        public string NickName { get; protected set; }
+        public string NickName { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Password is Required")]
-        public string Password { get; protected set; }
+        public string Password { get; set; }
 
-        [Required]
-        public RoleType Role { get; protected set; }
+        [EnumDataType(typeof(RoleType))]
+        public RoleType Role { get; set; }
+
+        public Person() {}
 
         public Person(
             string userName,
-            // string birthDate,
+            string birthDate,
             GenderType gender,
             string email,
             string cpf,
@@ -46,7 +47,7 @@ namespace GoTalentsCourse.AbstractClasses
         )
         {
             UserName = userName;
-            // BirthDate = DateTime.Parse(birthDate);
+            BirthDate = DateTime.Parse(birthDate);
             Gender = gender;
             Email = email;
             CPF = cpf;
