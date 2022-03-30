@@ -10,7 +10,8 @@ namespace GoTalentsCourse.Models
         public Guid FacilitatorId { get; set; }
 
         [EnumDataType(typeof(Speciality))]
-        public Speciality Speciality { get; set; }
+        [Required(ErrorMessage = "Speciality is required")]
+        public Speciality? Speciality { get; set; }
 
         public FacilitatorModel() : base()
         {

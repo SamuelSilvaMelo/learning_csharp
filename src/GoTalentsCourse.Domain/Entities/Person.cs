@@ -12,10 +12,11 @@ namespace GoTalentsCourse.AbstractClasses
         public string UserName { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Birth Data is required")]
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         [EnumDataType(typeof(GenderType))]
-        public GenderType Gender { get; set; }
+        [Required(ErrorMessage = "Gender is required")]
+        public GenderType? Gender { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
@@ -31,7 +32,8 @@ namespace GoTalentsCourse.AbstractClasses
         public string Password { get; set; }
 
         [EnumDataType(typeof(RoleType))]
-        public RoleType Role { get; set; }
+        [Required(ErrorMessage = "Role is required")]
+        public RoleType? Role { get; set; }
 
         public Person() {}
 
