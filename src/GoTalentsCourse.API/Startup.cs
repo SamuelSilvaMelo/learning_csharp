@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using GoTalentsCourse.Services;
 using System.Text.Json;
+using GoTalentsCourse.Repository.DataContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoTalentsCourse.API
 {
@@ -21,12 +23,13 @@ namespace GoTalentsCourse.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("GoCedroTech"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GoTalentsCourse.API", Version = "v1" });
             });
+            services.AddScoped<DataContext, DataContext>();
             services.AddScoped<IStudentServices, StudentServices>();
             services.AddScoped<IFacilitatorServices, FacilitatorServices>();
         }
