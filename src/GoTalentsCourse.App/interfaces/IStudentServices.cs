@@ -9,8 +9,8 @@ namespace GoTalentsCourse.Services
     {
         public List<StudentModel> FilterByName(string name);
         public List<StudentModel> GetAll(bool crescent = true);
-        public StudentModel GetByID(Guid userID);
-        public Guid Save(StudentModel newStudent);
-        public void Delete(Guid studentID);        
+        public StudentModel GetByID(int userID);
+        public int Save(StudentModel newStudent);
+        public void Delete(int studentID);        
     }
 }

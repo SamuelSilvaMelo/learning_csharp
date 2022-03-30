@@ -36,26 +36,5 @@ namespace GoTalentsCourse.AbstractClasses
         public RoleType? Role { get; set; }
 
         public Person() {}
-
-        public Person(
-            string userName,
-            string birthDate,
-            GenderType gender,
-            string email,
-            string cpf,
-            string nickName,
-            string password,
-            RoleType role
-        )
-        {
-            UserName = userName;
-            BirthDate = DateTime.Parse(birthDate);
-            Gender = gender;
-            Email = email;
-            CPF = cpf;
-            NickName = nickName;
-            Password = password;
-            Role = role;
-        }
     }
 }

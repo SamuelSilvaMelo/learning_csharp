@@ -4,60 +4,65 @@ using System.Collections.Generic;
 using GoTalentsCourse.Repository;
 using GoTalentsCourse.Models;
 using GoTalentsCourse.Types;
+using GoTalentsCourse.Repository.DataContext;
 
 namespace GoTalentsCourse.Services
 {
     public class StudentServices : IStudentServices
     {
-        StudentRepository _studentRepository;
+        DataContext _studentRepository;
 
-        public StudentServices()
+        public StudentServices(DataContext context)
         {
-            _studentRepository = new StudentRepository();
+            _studentRepository = context;
         }
 
         public List<StudentModel> FilterByName(string name)
         {
-            List<StudentModel> allStudents = _studentRepository.GetAll();
-            
-            return allStudents
+            return _studentRepository
+                    .Students
                     .Where(student => student.UserName.Contains(name))
                     .ToList();
         }
 
         public List<StudentModel> GetAll(bool crescent = true)
         {
-            List<StudentModel> allStudents = _studentRepository.GetAll();
-
             if (crescent)
-                return allStudents.OrderBy(student => student.UserName).ToList();
+                return _studentRepository
+                        .Students
+                        .OrderBy(student => student.UserName)
+                        .ToList();
             else
-                return allStudents.OrderByDescending(student => student.UserName).ToList();
+                return _studentRepository
+                        .Students
+                        .OrderByDescending(student => student.UserName)
+                        .ToList();
         }
 
-        public StudentModel GetByID(Guid studentId) => _studentRepository.GetByID(studentId);
+        public StudentModel GetByID(int studentId) => _studentRepository.Students.Find(studentId);
 
-        public Guid Save(StudentModel newStudent)
+        public int Save(StudentModel newStudent)
         {
             if (newStudent.Role != RoleType.ALUNO)
             {
                 throw new Exception("Invalid role for student");
             }
 
-            List<StudentModel> allStudents = GetAll();
-            StudentModel registeredStudent = allStudents.Find(student => student.Email == newStudent.Email);
+            StudentModel registeredStudent = _studentRepository.Students.FirstOrDefault(student => student.Email == newStudent.Email);
 
             if (registeredStudent != null)
                 throw new Exception("User Already Registered");
 
-            _studentRepository.Insert(newStudent);
-            return newStudent.StudentId;
+            _studentRepository.Students.Add(newStudent);
+            _studentRepository.SaveChanges();
+            return newStudent.Id;
         }
         
-        public void Delete(Guid studentID)
+        public void Delete(int studentID)
         {
             StudentModel student = GetByID(studentID);
-            _studentRepository.Delete(student);
+            _studentRepository.Students.Remove(student);
+            _studentRepository.SaveChanges();
         }
     }
 }

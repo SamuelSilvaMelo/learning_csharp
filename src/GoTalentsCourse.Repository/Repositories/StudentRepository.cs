@@ -17,20 +17,20 @@ namespace GoTalentsCourse.Repository
 
         public List<StudentModel> GetAll() => _student;
 
-        public StudentModel GetByID(Guid userID)
+        public StudentModel GetByID(int userID)
         {
             var filteredStudent = _student
                 .Where(student => student != null)
-                .Where(student => student.StudentId == userID)
+                .Where(student => student.Id == userID)
                 .First();
 
             return filteredStudent;
         }
 
-        public Guid Insert(StudentModel newStudant)
+        public int Insert(StudentModel newStudant)
         {
             _student.Add(newStudant);
-            return newStudant.StudentId;
+            return newStudant.Id;
         }
 
         public void Delete(StudentModel Student) => _student.Remove(Student);

@@ -25,7 +25,7 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpGet]
         [Route("student/{id}")]
-        public IActionResult GetStudentById(Guid id)
+        public IActionResult GetStudentById(int id)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpDelete]
         [Route("student/{id}")]
-        public IActionResult RemoveStudentByID(Guid id)
+        public IActionResult RemoveStudentByID(int id)
         {
             try
             {
