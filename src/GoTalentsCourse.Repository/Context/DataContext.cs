@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using GoTalentsCourse.Models;
 
-namespace GoTalentsCourse.Repository.DataContext
+namespace GoTalentsCourse.Repository
 {
     public class DataContext : DbContext
     {

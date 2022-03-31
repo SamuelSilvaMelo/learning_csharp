@@ -5,9 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using GoTalentsCourse.Services;
-using System.Text.Json;
-using GoTalentsCourse.Repository.DataContext;
+using GoTalentsCourse.Repository;
 using Microsoft.EntityFrameworkCore;
+using GoTalentsCourse.Interfaces;
+using GoTalentsCourse.Models;
 
 namespace GoTalentsCourse.API
 {
@@ -30,6 +31,7 @@ namespace GoTalentsCourse.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GoTalentsCourse.API", Version = "v1" });
             });
             services.AddScoped<DataContext, DataContext>();
+            services.AddScoped<IStandartRepositoryOperations<StudentModel>, StudentRepository>();
             services.AddScoped<IStudentServices, StudentServices>();
             services.AddScoped<IFacilitatorServices, FacilitatorServices>();
         }

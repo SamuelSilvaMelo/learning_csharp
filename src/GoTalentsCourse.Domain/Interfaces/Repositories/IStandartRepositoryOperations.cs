@@ -6,8 +6,8 @@ namespace GoTalentsCourse.Interfaces
     public interface IStandartRepositoryOperations<T>
     {
         List<T> GetAll();
-        T GetByID(Guid userID);
-        Guid Insert(T Student);
+        T GetByID(int userID);
+        int Insert(T Student);
         void Delete(T StudentID);
     }
 }
