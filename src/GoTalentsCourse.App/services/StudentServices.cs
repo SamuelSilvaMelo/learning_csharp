@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using GoTalentsCourse.Repository;
 using GoTalentsCourse.Models;
 using GoTalentsCourse.Types;
 using GoTalentsCourse.Interfaces;
+using System.Threading.Tasks;
 
 namespace GoTalentsCourse.Services
 {
@@ -17,18 +17,18 @@ namespace GoTalentsCourse.Services
             _studentRepository = repository;
         }
 
-        public List<StudentModel> FilterByName(string name)
+        public async Task<List<StudentModel>> FilterByNameAsync(string name)
         {
-            List<StudentModel> allStudents = _studentRepository.GetAll();
+            List<StudentModel> allStudents = await _studentRepository.GetAllAsync();
 
             return allStudents
                     .Where(student => student.UserName.Contains(name))
                     .ToList();
         }
 
-        public List<StudentModel> GetAll(bool crescent = true)
+        public async Task<List<StudentModel>> GetAllAsync(bool crescent = true)
         {
-            List<StudentModel> allStudents = _studentRepository.GetAll();
+            List<StudentModel> allStudents = await _studentRepository.GetAllAsync();
 
             if (crescent)
                 return allStudents
@@ -40,30 +40,35 @@ namespace GoTalentsCourse.Services
                         .ToList();
         }
 
-        public StudentModel GetByID(int studentId)
+        public async Task<StudentModel> GetByIdAsync(int studentId)
         {
-            return _studentRepository.GetByID(studentId);
+            StudentModel student = await _studentRepository.GetByIdAsync(studentId);
+            return student;
         }
 
-        public int Save(StudentModel newStudent)
+        public async Task<int> SaveAsync(StudentModel newStudent)
         {
             if (newStudent.Role != RoleType.ALUNO)
                 throw new Exception("Invalid role for student");
 
-            List<StudentModel> allStudents = _studentRepository.GetAll();
+            List<StudentModel> allStudents = await _studentRepository.GetAllAsync();
             StudentModel registeredStudent = allStudents.FirstOrDefault(student => student.Email == newStudent.Email);
 
             if (registeredStudent != null)
                 throw new Exception("User Already Registered");
 
-            _studentRepository.Insert(newStudent);
+            await _studentRepository.InsertAsync(newStudent);
             return newStudent.Id;
         }
         
-        public void Delete(int studentID)
+        public async Task DeleteAsync(int studentID)
         {
-            StudentModel student = GetByID(studentID);
-            _studentRepository.Delete(student);
+            StudentModel student = await GetByIdAsync(studentID);
+
+            if (student == null)
+                throw new Exception("Could not remove user");
+
+            await _studentRepository.DeleteAsync(student);
         }
     }
 }

@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using GoTalentsCourse.Models;
 
 namespace GoTalentsCourse.Services
 {
     public interface IFacilitatorServices
     {
-        public List<FacilitatorModel> FilterByName(string name);
-        public List<FacilitatorModel> GetAll(bool crescent = true);
-        public FacilitatorModel GetByID(int userID);
-        public int Save(FacilitatorModel newStudent);
-        public void Delete(int studentID);        
+        public Task<List<FacilitatorModel>> FilterByNameAsync(string name);
+        public Task<List<FacilitatorModel>> GetAllAsync(bool crescent = true);
+        public Task<FacilitatorModel> GetByIdAsync(int userID);
+        public Task<int> SaveAsync(FacilitatorModel newStudent);
+        public Task DeleteAsync(int studentID);        
     }
 }

@@ -2,6 +2,7 @@
 using GoTalentsCourse.Services;
 using GoTalentsCourse.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace GoTalentsCourse.API.Controllers
 {
@@ -17,19 +18,19 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpGet]
         [Route("facilitator")]
-        public IActionResult GetAllFacilitators()
+        public async Task<IActionResult> GetAllFacilitatorsAsync()
         {
-            var allFacilitators = _service.GetAll();
+            var allFacilitators = await _service.GetAllAsync();
             return Ok(allFacilitators);
         }
 
         [HttpGet]
         [Route("facilitator/{id}")]
-        public IActionResult GetFacilitatorById(int id)
+        public async Task<IActionResult> GetFacilitatorByIdAsync(int id)
         {
             try
             {
-                var facilitator = _service.GetByID(id);
+                var facilitator = await _service.GetByIdAsync(id);
                 return Ok(facilitator);
             }
             catch (System.Exception error)
@@ -40,11 +41,11 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpPost]
         [Route("facilitator")]
-        public IActionResult CreateNewFacilitator([FromBody] FacilitatorModel facilitator)
+        public async Task<IActionResult> CreateNewFacilitatorAsync([FromBody] FacilitatorModel facilitator)
         {
             try
             {
-                var newFacilitatorID = _service.Save(facilitator);
+                var newFacilitatorID = await _service.SaveAsync(facilitator);
                 return Ok(newFacilitatorID);
             }
             catch (System.Exception error)
@@ -55,11 +56,11 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpDelete]
         [Route("facilitator/{id}")]
-        public IActionResult RemoveFacilitatorByID(int id)
+        public async Task<IActionResult> RemoveFacilitatorByIdAsync(int id)
         {
             try
             {
-                _service.Delete(id);
+                await _service.DeleteAsync(id);
                 return NoContent();
             }
             catch (System.Exception error)

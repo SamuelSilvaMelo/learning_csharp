@@ -2,6 +2,7 @@
 using GoTalentsCourse.Services;
 using GoTalentsCourse.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace GoTalentsCourse.API.Controllers
 {
@@ -17,19 +18,19 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpGet]
         [Route("student")]
-        public IActionResult GetAllStudents()
+        public async Task<IActionResult> GetAllStudentsAsync()
         {
-            var allStudents = _service.GetAll();
+            var allStudents = await _service.GetAllAsync();
             return Ok(allStudents);
         }
 
         [HttpGet]
         [Route("student/{id}")]
-        public IActionResult GetStudentById(int id)
+        public async Task<IActionResult> GetStudentByIdAsync(int id)
         {
             try
             {
-                var student = _service.GetByID(id);
+                var student = await _service.GetByIdAsync(id);
                 return Ok(student);
             }
             catch (System.Exception error)
@@ -40,11 +41,11 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpPost]
         [Route("student")]
-        public IActionResult CreateNewStudent([FromBody] StudentModel student)
+        public async Task<IActionResult> CreateNewStudentAsync([FromBody] StudentModel student)
         {
             try
             {
-                var newStudentID = _service.Save(student);
+                var newStudentID = await _service.SaveAsync(student);
                 return Ok(newStudentID);
             }
             catch (System.Exception error)
@@ -55,11 +56,11 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpDelete]
         [Route("student/{id}")]
-        public IActionResult RemoveStudentByID(int id)
+        public async Task<IActionResult> RemoveStudentByIdAsync(int id)
         {
             try
             {
-                _service.Delete(id);
+                await _service.DeleteAsync(id);
                 return NoContent();
             }
             catch (System.Exception error)

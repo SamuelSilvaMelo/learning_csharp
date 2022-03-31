@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GoTalentsCourse.Interfaces;
 using GoTalentsCourse.Models;
 using Microsoft.EntityFrameworkCore;
@@ -17,26 +18,26 @@ namespace GoTalentsCourse.Repository
             _facilitators = context.Facilitators;
         }
 
-        public List<FacilitatorModel> GetAll() => _facilitators.ToList();
+        public async Task<List<FacilitatorModel>> GetAllAsync() => await _facilitators.ToListAsync();
 
-        public FacilitatorModel GetByID(int userID)
+        public async Task<FacilitatorModel> GetByIdAsync(int userID)
         {
-            var filteredFacilitator = _facilitators.Find(userID);
+            var filteredFacilitator = await _facilitators.FindAsync(userID);
 
             return filteredFacilitator;
         }
 
-        public int Insert(FacilitatorModel newFacilitator)
+        public async Task<int> InsertAsync(FacilitatorModel newFacilitator)
         {
-            _facilitators.Add(newFacilitator);
-            _database.SaveChanges();
+            await _facilitators.AddAsync(newFacilitator);
+            await _database.SaveChangesAsync();
             return newFacilitator.Id;
         }
 
-        public void Delete(FacilitatorModel facilitator)
+        public async Task DeleteAsync(FacilitatorModel facilitator)
         {
             _facilitators.Remove(facilitator);
-            _database.SaveChanges();
+            await _database.SaveChangesAsync();
         }
     }
 }

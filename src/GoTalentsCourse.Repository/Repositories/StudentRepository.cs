@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GoTalentsCourse.Interfaces;
 using GoTalentsCourse.Models;
-using GoTalentsCourse.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoTalentsCourse.Repository
@@ -19,26 +18,26 @@ namespace GoTalentsCourse.Repository
             _student = context.Students;
         }
 
-        public List<StudentModel> GetAll() => _student.ToList();
+        public async Task<List<StudentModel>> GetAllAsync() => await _student.ToListAsync();
 
-        public StudentModel GetByID(int userID)
+        public async Task<StudentModel> GetByIdAsync(int userID)
         {
-            var filteredStudent = _student.Find(userID);
+            var filteredStudent = await _student.FindAsync(userID);
 
             return filteredStudent;
         }
 
-        public int Insert(StudentModel newStudant)
+        public async Task<int> InsertAsync(StudentModel newStudant)
         {
-            _student.Add(newStudant);
-            _database.SaveChanges();
+            await _student.AddAsync(newStudant);
+            await _database.SaveChangesAsync();
             return newStudant.Id;
         }
 
-        public void Delete(StudentModel Student)
+        public async Task DeleteAsync(StudentModel Student)
         {
             _student.Remove(Student);
-            _database.SaveChanges();
+            await _database.SaveChangesAsync();
         }
     }
 }

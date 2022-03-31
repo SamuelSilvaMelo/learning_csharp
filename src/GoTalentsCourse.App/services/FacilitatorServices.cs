@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using GoTalentsCourse.Models;
 using GoTalentsCourse.Types;
 using GoTalentsCourse.Interfaces;
+using System.Threading.Tasks;
 
 namespace GoTalentsCourse.Services
 {
@@ -16,18 +17,18 @@ namespace GoTalentsCourse.Services
             _facilitatorRepository = repository;
         }
 
-        public List<FacilitatorModel> FilterByName(string name)
+        public async Task<List<FacilitatorModel>> FilterByNameAsync(string name)
         {
-            List<FacilitatorModel> allFacilitators = _facilitatorRepository.GetAll();
+            List<FacilitatorModel> allFacilitators = await _facilitatorRepository.GetAllAsync();
 
             return allFacilitators
                         .Where(facilitator => facilitator.UserName.Contains(name))
                         .ToList();
         }
 
-        public List<FacilitatorModel> GetAll(bool crescent = true)
+        public async Task<List<FacilitatorModel>> GetAllAsync(bool crescent = true)
         {
-            List<FacilitatorModel> allFacilitators = _facilitatorRepository.GetAll();
+            List<FacilitatorModel> allFacilitators = await _facilitatorRepository.GetAllAsync();
 
             if (crescent)
                 return allFacilitators
@@ -39,34 +40,36 @@ namespace GoTalentsCourse.Services
                         .ToList();
         }
 
-        public FacilitatorModel GetByID(int FacilitatorId)
+        public async Task<FacilitatorModel> GetByIdAsync(int FacilitatorId)
         {
-            return _facilitatorRepository.GetByID(FacilitatorId);
+            FacilitatorModel facilitator = await _facilitatorRepository.GetByIdAsync(FacilitatorId);
+
+            return facilitator;
         }
 
-        public int Save(FacilitatorModel newFacilitator)
+        public async Task<int> SaveAsync(FacilitatorModel newFacilitator)
         {
             if (newFacilitator.Role != RoleType.FACILITADOR)
                 throw new Exception("Invalid role for facilitator");
 
-            List<FacilitatorModel> allFacilitators = GetAll();
+            List<FacilitatorModel> allFacilitators = await GetAllAsync();
             FacilitatorModel registeredFacilitator = allFacilitators.Find(facilitator => facilitator.Email == newFacilitator.Email);
             
             if (registeredFacilitator != null)
                 throw new Exception("User Already Registered");
 
-            _facilitatorRepository.Insert(newFacilitator);
+            await _facilitatorRepository.InsertAsync(newFacilitator);
             return newFacilitator.Id;
         }
 
-        public void Delete(int FacilitatorId)
+        public async Task DeleteAsync(int FacilitatorId)
         {
-            FacilitatorModel facilitator = GetByID(FacilitatorId);
+            FacilitatorModel facilitator = await GetByIdAsync(FacilitatorId);
 
             if (facilitator == null)
                 throw new Exception("Could not remove user");
 
-            _facilitatorRepository.Delete(facilitator);
+            await _facilitatorRepository.DeleteAsync(facilitator);
         }
     }
 }
