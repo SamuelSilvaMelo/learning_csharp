@@ -32,6 +32,7 @@ namespace GoTalentsCourse.API
             });
             services.AddScoped<DataContext, DataContext>();
             services.AddScoped<IStandartRepositoryOperations<StudentModel>, StudentRepository>();
+            services.AddScoped<IStandartRepositoryOperations<FacilitatorModel>, FacilitatorRepository>();
             services.AddScoped<IStudentServices, StudentServices>();
             services.AddScoped<IFacilitatorServices, FacilitatorServices>();
         }

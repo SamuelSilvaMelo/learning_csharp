@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using GoTalentsCourse.Repository;
 using GoTalentsCourse.Models;
 using GoTalentsCourse.Types;
+using GoTalentsCourse.Interfaces;
 
 namespace GoTalentsCourse.Services
 {
     public class FacilitatorServices : IFacilitatorServices
     {
-        FacilitatorRepository _facilitatorRepository;
+        IStandartRepositoryOperations<FacilitatorModel> _facilitatorRepository;
 
-        public FacilitatorServices()
+        public FacilitatorServices(IStandartRepositoryOperations<FacilitatorModel> repository)
         {
-            _facilitatorRepository = new FacilitatorRepository();
+            _facilitatorRepository = repository;
         }
 
         public List<FacilitatorModel> FilterByName(string name)
@@ -30,19 +30,24 @@ namespace GoTalentsCourse.Services
             List<FacilitatorModel> allFacilitators = _facilitatorRepository.GetAll();
 
             if (crescent)
-                return allFacilitators.OrderBy(facilitator => facilitator.UserName).ToList();
+                return allFacilitators
+                        .OrderBy(facilitator => facilitator.UserName)
+                        .ToList();
             else
-                return allFacilitators.OrderByDescending(facilitator => facilitator.UserName).ToList();
+                return allFacilitators
+                        .OrderByDescending(facilitator => facilitator.UserName)
+                        .ToList();
         }
 
-        public FacilitatorModel GetByID(Guid FacilitatorId) => _facilitatorRepository.GetByID(FacilitatorId);
+        public FacilitatorModel GetByID(int FacilitatorId)
+        {
+            return _facilitatorRepository.GetByID(FacilitatorId);
+        }
 
-        public Guid Save(FacilitatorModel newFacilitator)
+        public int Save(FacilitatorModel newFacilitator)
         {
             if (newFacilitator.Role != RoleType.FACILITADOR)
-            {
                 throw new Exception("Invalid role for facilitator");
-            }
 
             List<FacilitatorModel> allFacilitators = GetAll();
             FacilitatorModel registeredFacilitator = allFacilitators.Find(facilitator => facilitator.Email == newFacilitator.Email);
@@ -51,12 +56,16 @@ namespace GoTalentsCourse.Services
                 throw new Exception("User Already Registered");
 
             _facilitatorRepository.Insert(newFacilitator);
-            return newFacilitator.FacilitatorId;
+            return newFacilitator.Id;
         }
 
-        public void Delete(Guid FacilitatorId)
+        public void Delete(int FacilitatorId)
         {
             FacilitatorModel facilitator = GetByID(FacilitatorId);
+
+            if (facilitator == null)
+                throw new Exception("Could not remove user");
+
             _facilitatorRepository.Delete(facilitator);
         }
     }

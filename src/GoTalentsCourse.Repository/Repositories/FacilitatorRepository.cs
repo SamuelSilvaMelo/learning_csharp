@@ -1,38 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using GoTalentsCourse.Interfaces;
 using GoTalentsCourse.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoTalentsCourse.Repository
 {
     public class FacilitatorRepository : IStandartRepositoryOperations<FacilitatorModel>
     {
-        static readonly List<FacilitatorModel> _facilitators;
+        private DataContext _database;
+        private DbSet<FacilitatorModel> _facilitators;
 
-        static FacilitatorRepository()
+        public FacilitatorRepository(DataContext context)
         {
-            _facilitators = new List<FacilitatorModel>();
+            _database = context;
+            _facilitators = context.Facilitators;
         }
 
-        public List<FacilitatorModel> GetAll() => _facilitators;
+        public List<FacilitatorModel> GetAll() => _facilitators.ToList();
 
-        public FacilitatorModel GetByID(Guid userID)
+        public FacilitatorModel GetByID(int userID)
         {
-            var filteredFacilitator = _facilitators
-                .Where(facilitator => facilitator != null)
-                .Where(facilitator => facilitator.FacilitatorId == userID)
-                .First();
+            var filteredFacilitator = _facilitators.Find(userID);
 
             return filteredFacilitator;
         }
 
-        public Guid Insert(FacilitatorModel newFacilitator)
+        public int Insert(FacilitatorModel newFacilitator)
         {
             _facilitators.Add(newFacilitator);
-            return newFacilitator.FacilitatorId;
+            _database.SaveChanges();
+            return newFacilitator.Id;
         }
 
-        public void Delete(FacilitatorModel facilitator) => _facilitators.Remove(facilitator);
+        public void Delete(FacilitatorModel facilitator)
+        {
+            _facilitators.Remove(facilitator);
+            _database.SaveChanges();
+        }
     }
 }

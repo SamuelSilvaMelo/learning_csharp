@@ -25,7 +25,7 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpGet]
         [Route("facilitator/{id}")]
-        public IActionResult GetFacilitatorById(Guid id)
+        public IActionResult GetFacilitatorById(int id)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace GoTalentsCourse.API.Controllers
 
         [HttpDelete]
         [Route("facilitator/{id}")]
-        public IActionResult RemoveFacilitatorByID(Guid id)
+        public IActionResult RemoveFacilitatorByID(int id)
         {
             try
             {
