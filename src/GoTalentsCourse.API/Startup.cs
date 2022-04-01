@@ -9,6 +9,7 @@ using GoTalentsCourse.Repository;
 using Microsoft.EntityFrameworkCore;
 using GoTalentsCourse.Interfaces;
 using GoTalentsCourse.Models;
+using GoTalentsCourse.Services.Mappers;
 
 namespace GoTalentsCourse.API
 {
@@ -25,12 +26,18 @@ namespace GoTalentsCourse.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("GoCedroTech"));
+
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GoTalentsCourse.API", Version = "v1" });
             });
+
             services.AddScoped<DataContext, DataContext>();
+
+            services.AddAutoMapper(typeof(StudentModelToStudentsProfile));
+
             services.AddScoped<IStandartRepositoryOperations<StudentModel>, StudentRepository>();
             services.AddScoped<IStandartRepositoryOperations<FacilitatorModel>, FacilitatorRepository>();
             services.AddScoped<IStudentServices, StudentServices>();
