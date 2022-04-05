@@ -1,17 +1,18 @@
 ﻿using System;
-using GoTalentsCourse.Services;
-using GoTalentsCourse.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using GoTalentsCourse.Services.Interfaces;
+using GoTalentsCourse.Models.ViewModels;
+using GoTalentsCourse.Models;
 
 namespace GoTalentsCourse.API.Controllers
 {
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IStudentServices _service;
+        private readonly IStandartServicesOperations<StudentViewModel, StudentModel> _service;
 
-        public StudentController(IStudentServices service)
+        public StudentController(IStandartServicesOperations<StudentViewModel, StudentModel> service)
         {
             _service = service;
         }

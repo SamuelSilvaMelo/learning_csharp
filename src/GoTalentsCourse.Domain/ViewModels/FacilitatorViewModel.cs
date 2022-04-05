@@ -2,9 +2,9 @@ using GoTalentsCourse.Types;
 
 namespace GoTalentsCourse.Models.ViewModels
 {
-    public class StudentViewModel
+    public class FacilitatorViewModel
     {
-        public StudentViewModel() { }
+        public FacilitatorViewModel() { }
             
         public int Id { get; set; }
         public string NickName { get; set; }

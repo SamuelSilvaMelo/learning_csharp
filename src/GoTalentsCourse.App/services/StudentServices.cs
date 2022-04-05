@@ -1,16 +1,17 @@
 ﻿using System;
+using AutoMapper;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using GoTalentsCourse.Models;
 using GoTalentsCourse.Types;
 using GoTalentsCourse.Interfaces;
-using System.Threading.Tasks;
-using AutoMapper;
+using GoTalentsCourse.Services.Interfaces;
 using GoTalentsCourse.Models.ViewModels;
 
 namespace GoTalentsCourse.Services
 {
-    public class StudentServices : IStudentServices
+    public class StudentServices : IStandartServicesOperations<StudentViewModel, StudentModel>
     {
         private IStandartRepositoryOperations<StudentModel> _studentRepository;
         private IMapper _mapper;
@@ -21,11 +22,13 @@ namespace GoTalentsCourse.Services
             _mapper = mapper;
         }
 
-        public async Task<List<StudentModel>> FilterByNameAsync(string name)
+        public async Task<List<StudentViewModel>> FilterByNameAsync(string name)
         {
             List<StudentModel> allStudents = await _studentRepository.GetAllAsync();
+            
+            List<StudentViewModel> studentViewList = _mapper.Map<List<StudentModel>, List<StudentViewModel>>(allStudents);
 
-            return allStudents
+            return studentViewList
                     .Where(student => student.UserName.Contains(name))
                     .ToList();
         }
@@ -49,6 +52,9 @@ namespace GoTalentsCourse.Services
         public async Task<StudentViewModel> GetByIdAsync(int studentId)
         {
             StudentModel student = await _studentRepository.GetByIdAsync(studentId);
+
+            if (student == null)
+                throw new Exception("User not found");
 
             StudentViewModel studentView = _mapper.Map<StudentViewModel>(student);
 

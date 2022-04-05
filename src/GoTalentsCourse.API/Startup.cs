@@ -1,15 +1,17 @@
+using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using GoTalentsCourse.Models;
 using GoTalentsCourse.Services;
 using GoTalentsCourse.Repository;
-using Microsoft.EntityFrameworkCore;
 using GoTalentsCourse.Interfaces;
-using GoTalentsCourse.Models;
+using GoTalentsCourse.Services.Interfaces;
 using GoTalentsCourse.Services.Mappers;
+using GoTalentsCourse.Models.ViewModels;
 
 namespace GoTalentsCourse.API
 {
@@ -40,8 +42,8 @@ namespace GoTalentsCourse.API
 
             services.AddScoped<IStandartRepositoryOperations<StudentModel>, StudentRepository>();
             services.AddScoped<IStandartRepositoryOperations<FacilitatorModel>, FacilitatorRepository>();
-            services.AddScoped<IStudentServices, StudentServices>();
-            services.AddScoped<IFacilitatorServices, FacilitatorServices>();
+            services.AddScoped<IStandartServicesOperations<StudentViewModel, StudentModel>, StudentServices>();
+            services.AddScoped<IStandartServicesOperations<FacilitatorViewModel, FacilitatorModel>, FacilitatorServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

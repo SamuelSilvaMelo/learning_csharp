@@ -1,70 +1,87 @@
 ﻿using System;
+using AutoMapper;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using GoTalentsCourse.Models;
 using GoTalentsCourse.Types;
 using GoTalentsCourse.Interfaces;
-using System.Threading.Tasks;
+using GoTalentsCourse.Services.Interfaces;
+using GoTalentsCourse.Models.ViewModels;
 
 namespace GoTalentsCourse.Services
 {
-    public class FacilitatorServices : IFacilitatorServices
+    public class FacilitatorServices : IStandartServicesOperations<FacilitatorViewModel, FacilitatorModel>
     {
         IStandartRepositoryOperations<FacilitatorModel> _facilitatorRepository;
-
-        public FacilitatorServices(IStandartRepositoryOperations<FacilitatorModel> repository)
+        private IMapper _mapper;
+        
+        public FacilitatorServices(IStandartRepositoryOperations<FacilitatorModel> repository, IMapper mapper)
         {
             _facilitatorRepository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<List<FacilitatorModel>> FilterByNameAsync(string name)
+        public async Task<List<FacilitatorViewModel>> FilterByNameAsync(string name)
         {
             List<FacilitatorModel> allFacilitators = await _facilitatorRepository.GetAllAsync();
 
-            return allFacilitators
+            List<FacilitatorViewModel> studentViewList = _mapper.Map<List<FacilitatorModel>, List<FacilitatorViewModel>>(allFacilitators);
+
+            return studentViewList
                         .Where(facilitator => facilitator.UserName.Contains(name))
                         .ToList();
         }
 
-        public async Task<List<FacilitatorModel>> GetAllAsync(bool crescent = true)
+        public async Task<List<FacilitatorViewModel>> GetAllAsync(bool crescent = true)
         {
             List<FacilitatorModel> allFacilitators = await _facilitatorRepository.GetAllAsync();
 
+            List<FacilitatorViewModel> facilitatorViewList = _mapper.Map<List<FacilitatorModel>, List<FacilitatorViewModel>>(allFacilitators);
+
             if (crescent)
-                return allFacilitators
+                return facilitatorViewList
                         .OrderBy(facilitator => facilitator.UserName)
                         .ToList();
             else
-                return allFacilitators
+                return facilitatorViewList
                         .OrderByDescending(facilitator => facilitator.UserName)
                         .ToList();
         }
 
-        public async Task<FacilitatorModel> GetByIdAsync(int FacilitatorId)
+        public async Task<FacilitatorViewModel> GetByIdAsync(int FacilitatorId)
         {
             FacilitatorModel facilitator = await _facilitatorRepository.GetByIdAsync(FacilitatorId);
 
-            return facilitator;
+            if (facilitator == null)
+                throw new Exception("User not found");
+
+            FacilitatorViewModel facilitatorView = _mapper.Map<FacilitatorViewModel>(facilitator);
+
+            return facilitatorView;
         }
 
-        public async Task<int> SaveAsync(FacilitatorModel newFacilitator)
+        public async Task<FacilitatorViewModel> SaveAsync(FacilitatorModel newFacilitator)
         {
             if (newFacilitator.Role != RoleType.FACILITADOR)
                 throw new Exception("Invalid role for facilitator");
 
-            List<FacilitatorModel> allFacilitators = await GetAllAsync();
-            FacilitatorModel registeredFacilitator = allFacilitators.Find(facilitator => facilitator.Email == newFacilitator.Email);
+            List<FacilitatorModel> allFacilitators = await _facilitatorRepository.GetAllAsync();
+            FacilitatorModel registeredFacilitator = allFacilitators.FirstOrDefault(facilitator => facilitator.Email == newFacilitator.Email);
             
             if (registeredFacilitator != null)
                 throw new Exception("User Already Registered");
 
             await _facilitatorRepository.InsertAsync(newFacilitator);
-            return newFacilitator.Id;
+
+            FacilitatorViewModel facilitatorView = _mapper.Map<FacilitatorViewModel>(newFacilitator);
+
+            return facilitatorView;
         }
 
         public async Task DeleteAsync(int FacilitatorId)
         {
-            FacilitatorModel facilitator = await GetByIdAsync(FacilitatorId);
+            FacilitatorModel facilitator = await _facilitatorRepository.GetByIdAsync(FacilitatorId);
 
             if (facilitator == null)
                 throw new Exception("Could not remove user");

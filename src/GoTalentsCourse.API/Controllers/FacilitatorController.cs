@@ -1,17 +1,18 @@
 ﻿using System;
-using GoTalentsCourse.Services;
-using GoTalentsCourse.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using GoTalentsCourse.Services.Interfaces;
+using GoTalentsCourse.Models.ViewModels;
+using GoTalentsCourse.Models;
 
 namespace GoTalentsCourse.API.Controllers
 {
     [ApiController]
     public class FacilitatorController : ControllerBase
     {
-        private readonly IFacilitatorServices _service;
+        private readonly IStandartServicesOperations<FacilitatorViewModel ,FacilitatorModel> _service;
 
-        public FacilitatorController(IFacilitatorServices service)
+        public FacilitatorController(IStandartServicesOperations<FacilitatorViewModel, FacilitatorModel> service)
         {
             _service = service;
         }
